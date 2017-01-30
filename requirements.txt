@@ -1,1 +1,1 @@
-pip install -e git+https://github.com/iot-lab/cli-tools.git#egg=iotlabcli[secure]
+git+https://github.com/iot-lab/cli-tools.git#egg=iotlabcli[secure]
