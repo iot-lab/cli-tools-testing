@@ -17,4 +17,4 @@ def test_submit_experiment_a8():
     exp = experiment.submit_experiment(api, name, duration, [resources])
     experiment.wait_experiment(api, exp['id'])
     state = experiment.get_experiment(api, exp['id'], 'state')
-    assert state == "Running"
+    assert state['state'] == "Running"
