@@ -14,6 +14,7 @@ def test_submit_experiment_a8():
     duration = 20
     api = iotlabcli.Api(user, passwd)
     exp = experiment.submit_experiment(api, name, duration, [resources])
-    experiment.wait_experiment(api, exp['id'])
-    state = experiment.get_experiment(api, exp['id'], 'state')
+    exp_id = exp['id']
+    experiment.wait_experiment(api, exp_id)
+    state = experiment.get_experiment(api, exp_id, 'state')
     assert state['state'] == "Running"
