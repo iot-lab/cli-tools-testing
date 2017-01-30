@@ -11,7 +11,7 @@ def test_submit_experiment_a8():
     passwd = os.environ['IOTLAB_PASS']
     resources = exp_resources_from_str("grenoble,a8,1-2")
     name = "test_exp_A8"
-    duration = 20
+    duration = 2
     api = iotlabcli.Api(user, passwd)
     exp = experiment.submit_experiment(api, name, duration, [resources])
     exp_id = exp['id']
