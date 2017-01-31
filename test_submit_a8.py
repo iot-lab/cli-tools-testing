@@ -12,7 +12,7 @@ def get_api():
     return api
 
 
-def test_submit_experiment_a8():
+def test_submit_experiment_a8_physical():
     """ Start experiment"""
     resources = exp_resources_from_str("grenoble,a8,1-2")
     name = "test_exp_A8"
@@ -25,7 +25,7 @@ def test_submit_experiment_a8():
     assert state['state'] == "Running"
 
 
-def test_submit_experiment_logical_a8():
+def test_submit_experiment_a8_logical():
     name = "test_exp_A8"
     duration = 2
     resources = exp_resources_from_str("2,archi=a8:at86rf231+site=grenoble")
