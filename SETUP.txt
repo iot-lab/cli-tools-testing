@@ -1,0 +1,22 @@
+Passing sensitive information to travis builds
+==============================================
+
+install the travis tool:
+
+	sudo apt-get install gem
+	sudo apt-get install ruby
+	sudo apt-get install ruby-dev
+	sudo gem install travis
+
+generate encrypted data:
+
+	travis encrypt IOTLAB_USER="<login>"
+	travis encrypt IOTLAB_PASS="<password>"
+
+copy paste the generated `secure: ...` text in .travis.yml
+in section `env: > global:`
+
+variables are exported and available to the build.
+
+
+https://docs.travis-ci.com/user/environment-variables/#Defining-encrypted-variables-in-.travis.yml
