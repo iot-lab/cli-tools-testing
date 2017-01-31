@@ -23,3 +23,15 @@ def test_submit_experiment_a8():
     experiment.wait_experiment(api, exp_id)
     state = experiment.get_experiment(api, exp_id, 'state')
     assert state['state'] == "Running"
+
+
+def test_submit_experiment_logical_a8():
+    name = "test_exp_A8"
+    duration = 2
+    resources = exp_resources_from_str("2,archi=a8:at86rf231+site=grenoble")
+    api = get_api()
+    exp = experiment.submit_experiment(api, name, duration, [resources])
+    exp_id = exp['id']
+    experiment.wait_experiment(api, exp_id)
+    state = experiment.get_experiment(api, exp_id, 'state')
+    assert state['state'] == "Running"
