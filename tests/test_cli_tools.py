@@ -19,7 +19,7 @@ def test_experiment_info_list_a8():
 
 
 def test_opena8_wait_for_boot():
-    args = "-d 2 -l 1,archi=a8:at86rf231+site=grenoble"
+    args = "-d 4 -l 2,archi=a8:at86rf231+site=grenoble"
     run("experiment-cli submit " + args)
     run("experiment-cli wait")
     run("open-a8-cli wait-for-boot")
