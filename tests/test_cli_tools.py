@@ -22,10 +22,13 @@ def test_experiment_info_list_a8():
     assert len(alive_a8.split('+')) > 4
 
 
-def test_opena8_wait_for_boot():
+def test_experiment_submit_a8_logical():
     args = "-d 4 -l 2,archi=a8:at86rf231+site=" + site
     run("experiment-cli submit " + args)
     run("experiment-cli wait")
+
+
+def test_opena8_wait_for_boot():
     ret = run("open-a8-cli wait-for-boot")
     assert len(ret["wait-for-boot"]["0"]) == 2
 
