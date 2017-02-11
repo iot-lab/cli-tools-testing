@@ -30,7 +30,7 @@ def test_opena8_reset_m3():
     run("open-a8-cli reset-m3")
 
 
-def run(cmd):
+def run(cmd, raw=False):
     cmd = cmd.split()
     ret = subprocess.check_output(cmd)
-    return json.loads(ret)
+    return ret if raw else json.loads(ret)
