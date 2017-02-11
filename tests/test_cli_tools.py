@@ -1,4 +1,4 @@
-# import pytest
+import pytest
 
 import subprocess
 import json
@@ -32,5 +32,8 @@ def test_opena8_reset_m3():
 
 def run(cmd, raw=False):
     cmd = cmd.split()
-    ret = subprocess.check_output(cmd)
+    try:
+        ret = subprocess.check_output(cmd)
+    except Exception as e:
+        pytest.fail(e)
     return ret if raw else json.loads(ret)
