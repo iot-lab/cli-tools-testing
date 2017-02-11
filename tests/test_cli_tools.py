@@ -26,7 +26,8 @@ def test_opena8_wait_for_boot():
     args = "-d 4 -l 2,archi=a8:at86rf231+site=" + site
     run("experiment-cli submit " + args)
     run("experiment-cli wait")
-    run("open-a8-cli wait-for-boot")
+    ret = run("open-a8-cli wait-for-boot")
+    assert len(ret["wait-for-boot"]["0"]) == 2
 
 
 def test_opena8_reset_m3():
