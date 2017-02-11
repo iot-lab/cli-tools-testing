@@ -5,22 +5,25 @@ import json
 import time
 
 
+site = "saclay"
+
+
 def test_experiment_info_list():
-    res = run("experiment-cli info -l --site grenoble")
+    res = run("experiment-cli info -l --site " + site)
 
     assert len(res["items"]) > 0
-    assert res["items"][0]["site"] == "grenoble"
+    assert res["items"][0]["site"] == site
 
 
 def test_experiment_info_list_a8():
-    res = run("experiment-cli info -li --site grenoble")
+    res = run("experiment-cli info -li --site " + site)
 
-    alive_a8 = res["items"][0]["grenoble"]["a8"]["Alive"]
+    alive_a8 = res["items"][0][site]["a8"]["Alive"]
     assert len(alive_a8.split('+')) > 4
 
 
 def test_opena8_wait_for_boot():
-    args = "-d 4 -l 2,archi=a8:at86rf231+site=grenoble"
+    args = "-d 4 -l 2,archi=a8:at86rf231+site=" + site
     run("experiment-cli submit " + args)
     run("experiment-cli wait")
     run("open-a8-cli wait-for-boot")
@@ -37,7 +40,7 @@ def test_opena8_run_script():
     nb_nodes = len(nodes["items"])
 
     script = "tests/sample_script.sh"
-    frontend = "grenoble.iot-lab.info"
+    frontend = site + ".iot-lab.info"
     script_out = "A8/script_out.txt"
     ssh(frontend, "rm -f " + script_out)
 
