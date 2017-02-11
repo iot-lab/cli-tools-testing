@@ -5,6 +5,8 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - auth-cli -u $IOTLAB_USER -p $IOTLAB_PASS
+  - tests/setup_ssh_key.sh
 
 script:
   - py.test
