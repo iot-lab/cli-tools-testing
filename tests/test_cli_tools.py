@@ -2,6 +2,7 @@ import pytest
 
 import subprocess
 import json
+import time
 
 
 def test_experiment_info_list():
@@ -28,6 +29,29 @@ def test_opena8_wait_for_boot():
 def test_opena8_reset_m3():
     # uses previous experiment
     run("open-a8-cli reset-m3")
+
+
+def test_opena8_run_script():
+    # uses previous experiment
+    nodes = run("experiment-cli get --resources")
+    nb_nodes = len(nodes["items"])
+
+    script = "tests/sample_script.sh"
+    frontend = "grenoble.iot-lab.info"
+    script_out = "A8/script_out.txt"
+    ssh(frontend, "rm -f " + script_out)
+
+    run("open-a8-cli run-script " + script)
+
+    # script runs _async_ on A8 nodes. sample_script sleeps 3-4s. wait
+    time.sleep(5)
+    ret = ssh(frontend, "cat " + script_out)
+    assert ret == "{}\n".format(time.strftime("%F")) * nb_nodes
+
+
+def ssh(host, cmd):
+    opt = "-o StrictHostKeyChecking=no"
+    return run("ssh " + host + " " + opt + " " + cmd, raw=True)
 
 
 def run(cmd, raw=False):
