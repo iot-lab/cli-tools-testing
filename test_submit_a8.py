@@ -5,11 +5,12 @@ from iotlabcli import experiment
 from iotlabcli.parser.experiment import exp_resources_from_str
 import os
 
+USERNAME = os.environ['IOTLAB_USER']
+PASSWORD = os.environ['IOTLAB_PASS']
+
+
 def get_api():
-    user = os.environ['IOTLAB_USER']
-    passwd = os.environ['IOTLAB_PASS']
-    api = iotlabcli.Api(user, passwd)
-    return api
+    return iotlabcli.Api(USERNAME, PASSWORD)
 
 
 def test_submit_experiment_a8_physical():
