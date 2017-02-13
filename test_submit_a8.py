@@ -35,3 +35,11 @@ def test_submit_experiment_a8_logical():
     experiment.wait_experiment(api, exp_id)
     state = experiment.get_experiment(api, exp_id, 'state')
     assert state['state'] == "Running"
+
+
+def test_stop_experiment():
+    # use previous experiment
+    api = get_api()
+    exp_ids = api.get_experiments()  # running experiments
+    exp_id = exp_ids["items"][0]["id"]
+    api.stop_experiment(exp_id)
