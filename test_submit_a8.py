@@ -13,6 +13,16 @@ def get_api():
     return iotlabcli.Api(USERNAME, PASSWORD)
 
 
+def patch_api():
+    @classmethod
+    def patched_api(self, user, password):
+        self.url = "https://devwww.iot-lab.info/rest/"
+        self.auth = (USERNAME, PASSWORD)
+    iotlabcli.rest.Api.__init__ = patched_api
+
+#patch_api()
+
+
 def test_submit_experiment_a8_physical():
     """ Start experiment"""
     resources = exp_resources_from_str("grenoble,a8,1-2")
