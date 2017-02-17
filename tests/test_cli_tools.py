@@ -51,7 +51,7 @@ def test_opena8_run_script():
     run("open-a8-cli run-script " + script)
 
     # script runs _async_ on A8 nodes. sample_script sleeps 3-4s. wait
-    time.sleep(5)
+    time.sleep(8)
     ret = ssh(frontend, "cat " + script_out)
     assert ret == "{}\n".format(time.strftime("%F")) * nb_nodes
 
