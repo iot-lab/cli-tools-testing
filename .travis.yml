@@ -10,7 +10,7 @@ install:
   - tests/setup_ssh_key.sh
 
 script:
-  - py.test -v tests/
+  - py.test tests/ api_tests/
 
 
 env:
