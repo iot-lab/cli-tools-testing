@@ -1,34 +1,15 @@
-#!/usr/bin/env python
-# -*- coding:utf-8
-import iotlabcli
+import pytest
+
 from iotlabcli import experiment
 from iotlabcli.parser.experiment import exp_resources_from_str
-import os
 
-USERNAME = os.environ['IOTLAB_USER']
-PASSWORD = os.environ['IOTLAB_PASS']
+# see conftest.py for api def.
 
 
-def get_api():
-    return iotlabcli.Api(USERNAME, PASSWORD)
-
-
-def patch_api():
-    @classmethod
-    def patched_api(self, user, password):
-        self.url = "https://devwww.iot-lab.info/rest/"
-        self.auth = (USERNAME, PASSWORD)
-    iotlabcli.rest.Api.__init__ = patched_api
-
-#patch_api()
-
-
-def test_submit_experiment_a8_physical():
-    """ Start experiment"""
+def test_submit_experiment_a8_physical(api):
     resources = exp_resources_from_str("grenoble,a8,1-2")
     name = "test_exp_A8"
     duration = 2
-    api = get_api()
     exp = experiment.submit_experiment(api, name, duration, [resources])
     exp_id = exp['id']
     experiment.wait_experiment(api, exp_id)
@@ -36,11 +17,10 @@ def test_submit_experiment_a8_physical():
     assert state['state'] == "Running"
 
 
-def test_submit_experiment_a8_logical():
+def test_submit_experiment_a8_logical(api):
     name = "test_exp_A8"
     duration = 2
     resources = exp_resources_from_str("2,archi=a8:at86rf231+site=grenoble")
-    api = get_api()
     exp = experiment.submit_experiment(api, name, duration, [resources])
     exp_id = exp['id']
     experiment.wait_experiment(api, exp_id)
@@ -48,9 +28,8 @@ def test_submit_experiment_a8_logical():
     assert state['state'] == "Running"
 
 
-def test_stop_experiment():
+def test_stop_experiment(api):
     # use previous experiment
-    api = get_api()
     exp_ids = api.get_experiments()  # running experiments
     exp_id = exp_ids["items"][0]["id"]
     api.stop_experiment(exp_id)
