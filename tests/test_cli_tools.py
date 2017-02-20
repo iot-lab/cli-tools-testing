@@ -1,7 +1,6 @@
 import pytest
 
-import subprocess
-import json
+from conftest import run, ssh
 import time
 
 
@@ -54,17 +53,3 @@ def test_opena8_run_script():
     time.sleep(8)
     ret = ssh(frontend, "cat " + script_out)
     assert ret == "{}\n".format(time.strftime("%F")) * nb_nodes
-
-
-def ssh(host, cmd):
-    opt = "-o StrictHostKeyChecking=no"
-    return run("ssh " + host + " " + opt + " " + cmd, raw=True)
-
-
-def run(cmd, raw=False):
-    cmd = cmd.split()
-    try:
-        ret = subprocess.check_output(cmd)
-    except Exception as e:
-        pytest.fail(e)
-    return ret if raw else json.loads(ret)
