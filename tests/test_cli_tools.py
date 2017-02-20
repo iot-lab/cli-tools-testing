@@ -53,3 +53,7 @@ def test_opena8_run_script():
     time.sleep(8)
     ret = ssh(frontend, "cat " + script_out)
     assert ret == "{}\n".format(time.strftime("%F")) * nb_nodes
+
+
+def test_stop_experiment():
+    run("experiment-cli stop")
