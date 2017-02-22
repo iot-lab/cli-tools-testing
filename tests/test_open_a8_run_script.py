@@ -7,25 +7,20 @@ import time
 site = "saclay"
 
 
-def test_experiment_submit_a8_logical():
+def test_start_experiment(exp):
     args = "-d 4 -l 2,archi=a8:at86rf231+site=" + site
-    run("experiment-cli submit " + args)
-    run("experiment-cli wait")
+    ret = run("experiment-cli submit " + args)
+    exp.id = str(ret["id"])
+    run("experiment-cli wait -i " + exp.id)
 
 
-def test_opena8_wait_for_boot():
-    ret = run("open-a8-cli wait-for-boot")
+def test_wait_for_boot(exp):
+    ret = run("open-a8-cli -i " + exp.id + " wait-for-boot")
     assert len(ret["wait-for-boot"]["0"]) == 2
 
 
-def test_opena8_reset_m3():
-    # uses previous experiment
-    run("open-a8-cli reset-m3")
-
-
-def test_opena8_run_script():
-    # uses previous experiment
-    nodes = run("experiment-cli get --resources")
+def test_run_script(exp):
+    nodes = run("experiment-cli get --resources -i " + exp.id)
     nb_nodes = len(nodes["items"])
 
     script = "tests/sample_script.sh"
@@ -33,13 +28,9 @@ def test_opena8_run_script():
     script_out = "A8/script_out.txt"
     ssh(frontend, "rm -f " + script_out)
 
-    run("open-a8-cli run-script " + script)
+    run("open-a8-cli -i " + exp.id + " run-script " + script)
 
     # script runs _async_ on A8 nodes. sample_script sleeps 3-4s. wait
-    time.sleep(8)
+    time.sleep(10)
     ret = ssh(frontend, "cat " + script_out)
     assert ret == "{}\n".format(time.strftime("%F")) * nb_nodes
-
-
-def test_stop_experiment():
-    run("experiment-cli stop")
