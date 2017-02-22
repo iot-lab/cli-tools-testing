@@ -19,6 +19,10 @@ def run(cmd, raw=False):
     return ret if raw else json.loads(ret)
 
 
+def open_a8(exp, cmd):
+    return run("open-a8-cli -i " + exp.id + " " + cmd)
+
+
 @pytest.fixture(scope="module")
 def exp_a8():
     args = "-d 4 -l 2,archi=a8:at86rf231+site=grenoble"
