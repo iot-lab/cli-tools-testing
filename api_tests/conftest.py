@@ -29,7 +29,7 @@ from iotlabcli.parser.experiment import exp_resources_from_str
 
 @pytest.fixture(scope="module")
 def exp_a8(api):
-    duration = 2
+    duration = 4
     nb_nodes = 2
     site = "grenoble"
     name = "test_exp_A8"
