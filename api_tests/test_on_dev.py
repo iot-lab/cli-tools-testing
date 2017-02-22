@@ -5,6 +5,10 @@ from iotlabcli.parser.experiment import exp_resources_from_str
 pytestmark = pytest.mark.usefixtures("run_on_dev")
 
 
+def test_on_dev(api):
+    assert api.url == "https://devwww.iot-lab.info/rest/"
+
+
 def test_exp_resources_from_str_on_dev():
     exp_resources_from_str("2,archi=a8:at86rf231+site=devgrenoble")
 
