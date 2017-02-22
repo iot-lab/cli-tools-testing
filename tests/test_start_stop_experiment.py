@@ -34,11 +34,3 @@ def test_start_and_wait(exp):
 
 def test_let_die(exp):
     run("experiment-cli wait --state Terminated -i " + exp.id, raw=True)
-
-
-
-@pytest.fixture(scope="module")
-def exp():
-    """ a popo for storing experiment id across tests """
-    class _exp: id = None
-    return _exp()

@@ -28,3 +28,10 @@ def exp_a8():
     yield "-i {}".format(exp_id)
 
     run("experiment-cli stop -i {}".format(exp_id))
+
+
+@pytest.fixture(scope="module")
+def exp():
+    """ a popo for storing experiment id across tests """
+    class _exp: id = None
+    return _exp()
