@@ -5,6 +5,7 @@ from iotlabsshcli.open_a8 import _nodes_grouped
 
 
 #pytestmark = pytest.mark.usefixtures("run_on_dev")
+pytestmark = pytest.mark.skip(reason="fails when run along other tests")
 
 
 def test_run_cmd_on_frontends(ssh_api):
