@@ -11,11 +11,6 @@ def test_get_sites(api):
     assert {"site": "devgrenoble"} in sites
 
 
-def api():
-    username, password = iotlabcli.auth.get_user_credentials()
-    return iotlabcli.Api(username, password)
-
-
 def test_exp_resources_from_str_on_dev():
     from iotlabcli.parser.experiment import exp_resources_from_str
     exp_resources_from_str("2,archi=a8:at86rf231+site=devgrenoble")
@@ -27,6 +22,13 @@ def test_exp_resources_from_str_on_prod_fails():
         assert False  # will raise if running on the dev platform
     except:
         pass
+
+
+# the following code make this script runnable outside of pytest
+
+def api():
+    username, password = iotlabcli.auth.get_user_credentials()
+    return iotlabcli.Api(username, password)
 
 
 def main():
