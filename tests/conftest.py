@@ -21,10 +21,3 @@ def run(cmd, raw=False):
 
 def open_a8(exp, cmd):
     return run("open-a8-cli -i " + exp.id + " " + cmd)
-
-
-@pytest.fixture(scope="module")
-def exp():
-    """ a popo for storing experiment id across tests """
-    class _exp: id = None
-    return _exp()
