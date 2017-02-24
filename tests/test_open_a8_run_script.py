@@ -25,7 +25,7 @@ def test_run_script(exp):
 def do_run_script(exp, nodes):
     script = "tests/sample_script.sh"
     frontend = site + ".iot-lab.info"
-    script_out = "A8/script_out.txt"
+    script_out = "'A8/script_out.*'"
     ssh(frontend, "rm -f " + script_out)
 
     run("open-a8-cli -i " + exp.id + " run-script " + script + a8_nodes_list(nodes))
