@@ -8,7 +8,7 @@ site = "saclay"
 
 
 def test_start_experiment(exp):
-    args = "-d 4 -l 2,archi=a8:at86rf231+site=" + site
+    args = "-d 6 -l 60,archi=a8:at86rf231+site=" + site  # => ~30 nodes boot
     ret = run("experiment-cli submit " + args)
     exp.id = str(ret["id"])
     run("experiment-cli wait -i " + exp.id)
