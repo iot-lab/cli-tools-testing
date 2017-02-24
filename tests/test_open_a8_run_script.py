@@ -15,7 +15,9 @@ def test_start_experiment(exp):
 
 
 def test_run_script(exp):
-    ret = run("open-a8-cli -i " + exp.id + " wait-for-boot")
+    info = run("experiment-cli get -p -i " + exp.id)
+    deployed_nodes = info["deploymentresults"]["0"]
+    ret = run("open-a8-cli -i " + exp.id + " wait-for-boot" + a8_nodes_list(deployed_nodes))
     booted_nodes = ret["wait-for-boot"]["0"]
     do_run_script(exp, booted_nodes)
 
@@ -38,3 +40,10 @@ def do_run_script(exp, nodes):
 def test_run_script_naive(exp):
     run("open-a8-cli -i " + exp.id + " wait-for-boot")
     do_run_script(exp, None)
+
+
+@pytest.mark.skip(reason="fails if some nodes are not deployed")
+def test_run_script_naive_2(exp):
+    ret = run("open-a8-cli -i " + exp.id + " wait-for-boot")
+    booted_nodes = ret["wait-for-boot"]["0"]
+    do_run_script(exp, booted_nodes)
