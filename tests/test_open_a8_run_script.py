@@ -35,14 +35,6 @@ def do_run_script(exp, nodes):
 
 
 @pytest.mark.skip(reason="fails if some nodes are not booted")
-def test_wait_for_boot_naive(exp):
-    ret = run("open-a8-cli -i " + exp.id + " wait-for-boot")
-    assert len(ret["wait-for-boot"]["0"]) == 2
-
-
-@pytest.mark.skip(reason="fails if some nodes are not booted")
 def test_run_script_naive(exp):
-    nodes = run("experiment-cli get --resources -i " + exp.id)
-    nodes = nodes["items"]
-
-    do_run_script(exp, nodes)
+    run("open-a8-cli -i " + exp.id + " wait-for-boot")
+    do_run_script(exp, None)
