@@ -30,7 +30,7 @@ def a8_nodes_list(nodes):
     def str_list(nodes): return "+".join([node_id(n) for n in nodes])
     from iotlabsshcli.open_a8 import _nodes_grouped
 
-    groups = _nodes_grouped(nodes)
+    groups = _nodes_grouped(nodes or [])
     specs = [ site + ",a8," + str_list(groups[site]) for site in groups ]
 
     return " -l ".join([""] + specs)
